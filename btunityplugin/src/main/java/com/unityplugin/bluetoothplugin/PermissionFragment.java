@@ -11,12 +11,9 @@ import java.util.ArrayList;
 
 public class PermissionFragment extends Fragment
 {
-    // This is used while requesting for permission
-    public static final int PERMISSION_REQUEST_CODE = 1;
-
-    // Required permissions list
-    private String[] s_required_permissions;
-    private boolean mAskedPermission = false;
+    public static final int PERMISSION_REQUEST_CODE = 1;        // Kod używany przy zapytaniu o pozwolenie
+    private String[] s_required_permissions;                    // Lista wymaganych pozwoleń
+    private boolean b_asked_permission = false;
 
     public PermissionFragment(String[] sRequiredPermissions)
     {
@@ -32,8 +29,7 @@ public class PermissionFragment extends Fragment
 
     public void checkThemePermissions()
     {
-        // Check and request for permissions for Android M and older versions
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !mAskedPermission)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !b_asked_permission)
         {
             ArrayList<String> requiredPermissions = new ArrayList<String>();
 
@@ -44,6 +40,6 @@ public class PermissionFragment extends Fragment
             if (requiredPermissions.size() > 0)
                 this.requestPermissions(requiredPermissions.toArray(new String[requiredPermissions.size()]), PERMISSION_REQUEST_CODE);
         }
-        mAskedPermission = true;
+        b_asked_permission = true;
     }
 }
