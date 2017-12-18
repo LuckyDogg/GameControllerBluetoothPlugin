@@ -30,14 +30,13 @@ public class BluetoothConnection
     private ConnectThread connect_thread;
     private UUID device_UUID;
     private boolean b_connection_in_progress;
-    private Context context;
+    private String received_data;
 
-    public String s_received_data;
+    public String getReceivedData(){return received_data;}
 
     public BluetoothConnection(Context cContext)
     {
         b_connection_in_progress = false;
-        context = cContext;
         bluetooth_adapter = BluetoothAdapter.getDefaultAdapter();
         connected_thread = null;
     }
@@ -47,7 +46,7 @@ public class BluetoothConnection
         return connected_thread!=null;
     }
 
-    public boolean isTheConnectionInProgress()
+    public boolean isConnectionInProgress()
     {
         return b_connection_in_progress;
     }
@@ -65,7 +64,7 @@ public class BluetoothConnection
         connect_thread.start();
     }
 
-    private void connected(BluetoothSocket bluetooth_socket, BluetoothDevice bluetooth_device)
+    private void connected(BluetoothSocket bluetooth_socket)
     {
         Log.d(TAG, "connected: Starting.");
 
@@ -139,7 +138,7 @@ public class BluetoothConnection
                 Log.d(TAG, "run: ConnectThread: Could not connect to UUID: " + MY_UUID_INSECURE);
             }
 
-            connected(bluetooth_socket, bluetooth_device);
+            connected(bluetooth_socket);
         }
 
         public void cancel()
@@ -220,7 +219,7 @@ public class BluetoothConnection
                                 readBufferPosition = 0;
 
                                 Log.d(TAG, "InputStream: " + data);
-                                s_received_data = data;
+                                received_data = data;
                             }
                             else
                                 readBuffer[readBufferPosition++] = b;
@@ -228,6 +227,7 @@ public class BluetoothConnection
                     }
                 } catch (IOException ex)
                 {
+                    connected_thread = null;
                     stopWorker = true;
                 }
             }

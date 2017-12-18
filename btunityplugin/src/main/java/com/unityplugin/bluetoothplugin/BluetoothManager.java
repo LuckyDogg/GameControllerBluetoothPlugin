@@ -116,6 +116,7 @@ public class BluetoothManager
     public void DiscoverDevices()
     {
         CheckPermissions();
+        b_devices_found=false;
         bt_discovered_devices = new ArrayList<>();
 
         Log.d(TAG, "btnDiscover: Looking for unpaired devices.");
@@ -246,7 +247,7 @@ public class BluetoothManager
      */
     public String sReceiveData()
     {
-        return bluetooth_connection.s_received_data;
+        return bluetooth_connection.getReceivedData();
     }
 
     /**
@@ -256,6 +257,15 @@ public class BluetoothManager
     public boolean bIsConnected()
     {
         return bluetooth_connection.isConnected();
+    }
+
+    /**
+     * Zwraca informację o tym czy smartfon nawiązał połączenie
+     * z jakimś urządzeniem
+     */
+    public boolean bIsConnectionInProgress()
+    {
+        return bluetooth_connection.isConnectionInProgress();
     }
 
     /**

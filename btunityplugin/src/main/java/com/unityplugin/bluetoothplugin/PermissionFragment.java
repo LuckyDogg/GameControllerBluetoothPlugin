@@ -23,11 +23,11 @@ public class PermissionFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        checkThemePermissions();
+        checkPermissions();
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    public void checkThemePermissions()
+    public void checkPermissions()
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !b_asked_permission)
         {
